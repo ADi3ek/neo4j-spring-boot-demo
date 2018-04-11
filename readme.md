@@ -1,6 +1,10 @@
-This is a simple Neo4j demo that utilizes Spring Boot framework. There are two nodes and one relation between them defined:
+**This is a simple Spring Boot project to showcase the problem described on StackOverflow here:**
 
-* `Task` node, which can have one status (`HAS_STATUS` outgoing relationship)
+**https://stackoverflow.com/questions/49783019/unable-to-change-or-delete-relationship-between-nodes-with-neo4j-ogm-using-sprin**
+
+The demo uses Spring Boot framework with Spring Data Neo4j module. There are two nodes and one relationship between them defined:
+
+* `Task` node, which can have one `Status` (`HAS_STATUS` outgoing relationship)
 * `Status` node, which can have `HAS_STATUS` incoming relationships from different `Task` nodes
 
 One can manipulate the nodes using Spring shell commands:
