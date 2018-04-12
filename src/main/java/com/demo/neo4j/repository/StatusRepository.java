@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StatusRepository extends Neo4jRepository<Status, Long> {
 
-    @Query("MATCH (s:Status) WHERE s.key = {key} WITH s MATCH res=(s)-[*0..1]-(x) RETURN res")
-    Status findByKey(@Param("key") String key);
+    Status findByKey(String key);
 
 }

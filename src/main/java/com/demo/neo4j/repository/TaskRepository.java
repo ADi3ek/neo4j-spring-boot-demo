@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaskRepository extends Neo4jRepository<Task, Long> {
 
-    @Query("MATCH (t:Task) WHERE t.key = {key} WITH t MATCH res=(t)-[*0..1]-(x) RETURN res")
-    Task findByKey(@Param("key") String key);
+    Task findByKey(String key);
 
 }
