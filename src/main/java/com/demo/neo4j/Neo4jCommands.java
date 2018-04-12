@@ -18,7 +18,7 @@ public class Neo4jCommands {
     public String updateTaskStatus(@ShellOption String taskKey, @ShellOption String newStatusKey) {
         Status status = null;
         Task task = neo4jService.findTaskByKey(taskKey);
-        if(newStatusKey != "null") {
+        if(!newStatusKey.equals("null")) {
             status = neo4jService.findStatusByKey(newStatusKey);
         }
 
