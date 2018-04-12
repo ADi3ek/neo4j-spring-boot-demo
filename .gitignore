@@ -23,4 +23,4 @@
 /nbdist/
 /.nb-gradle/
 
-*.log
+spring-shell.log
