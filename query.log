@@ -1,0 +1,65 @@
+shell:>create-statuses
+2018-04-12 12:30:46.489  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row CREATE (n:`Status`) SET n=row.props RETURN row.nodeRef as ref, ID(n) as id, row.type as type with params {rows=[{nodeRef=-1, type=node, props={key=todo}}]}
+2018-04-12 12:30:46.511  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row CREATE (n:`Status`) SET n=row.props RETURN row.nodeRef as ref, ID(n) as id, row.type as type with params {rows=[{nodeRef=-2, type=node, props={key=in_progress}}]}
+2018-04-12 12:30:46.519  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row CREATE (n:`Status`) SET n=row.props RETURN row.nodeRef as ref, ID(n) as id, row.type as type with params {rows=[{nodeRef=-3, type=node, props={key=done}}]}
+Statuses created: "todo", "in_progress", "done"
+
+shell:>create-task TASK2 todo
+2018-04-12 12:31:04.477  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: MATCH (n:`Status`) WHERE n.`key` = { `key_0` } WITH n MATCH p=(n)-[*0..1]-(m) RETURN p, ID(n) with params {key_0=todo}
+2018-04-12 12:31:04.491  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row CREATE (n:`Task`) SET n=row.props RETURN row.nodeRef as ref, ID(n) as id, row.type as type with params {rows=[{nodeRef=-4, type=node, props={key=TASK2}}]}
+2018-04-12 12:31:04.496  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row MATCH (startNode) WHERE ID(startNode) = row.startNodeId MATCH (endNode) WHERE ID(endNode) = row.endNodeId MERGE (startNode)-[rel:`HAS_STATUS`]->(endNode) RETURN row.relRef as ref, ID(rel) as id, row.type as type with params {rows=[{startNodeId=2558, relRef=-161672347, type=rel, endNodeId=2555}]}
+2018-04-12 12:31:04.500  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Status` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type with params {rows=[{type=node, nodeId=2555, props={key=todo}}]}
+Task "TASK2" created, status: "todo"
+
+shell:>update-task-status TASK2 in_progress
+2018-04-12 12:31:14.177  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: MATCH (n:`Task`) WHERE n.`key` = { `key_0` } WITH n MATCH p=(n)-[*0..1]-(m) RETURN p, ID(n) with params {key_0=TASK2}
+2018-04-12 12:31:14.183  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: MATCH (n:`Status`) WHERE n.`key` = { `key_0` } WITH n MATCH p=(n)-[*0..1]-(m) RETURN p, ID(n) with params {key_0=in_progress}
+2018-04-12 12:31:14.186  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Status` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type with params {rows=[{type=node, nodeId=2555, props={key=todo}}]}
+2018-04-12 12:31:14.198  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row MATCH (startNode) WHERE ID(startNode) = row.startNodeId MATCH (endNode) WHERE ID(endNode) = row.endNodeId MERGE (startNode)-[rel:`HAS_STATUS`]->(endNode) RETURN row.relRef as ref, ID(rel) as id, row.type as type with params {rows=[{startNodeId=2558, relRef=-1123664282, type=rel, endNodeId=2556}]}
+2018-04-12 12:31:14.202  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Status` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type with params {rows=[{type=node, nodeId=2556, props={key=in_progress}}]}
+2018-04-12 12:31:14.206  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Task` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type with params {rows=[{type=node, nodeId=2558, props={key=TASK2}}]}
+2018-04-12 12:31:14.216  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row MATCH (startNode) WHERE ID(startNode) = row.startNodeId MATCH (endNode) WHERE ID(endNode) = row.endNodeId MERGE (startNode)-[rel:`HAS_STATUS`]->(endNode) RETURN row.relRef as ref, ID(rel) as id, row.type as type with params {rows=[{startNodeId=2558, relRef=-732118572, type=rel, endNodeId=2556}]}
+2018-04-12 12:31:14.220  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Status` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type with params {rows=[{type=node, nodeId=2556, props={key=in_progress}}]}
+2018-04-12 12:31:14.225  INFO 9895 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Task` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type with params {rows=[{type=node, nodeId=2558, props={key=TASK2}}]}
+Task "TASK2" updated, status: "in_progress"
+
+shell:>update-task-status TASK2 null
+2018-04-12 13:00:10.059  INFO 10056 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: MATCH (n:`Task`) WHERE n.`key` = { `key_0` } WITH n MATCH p=(n)-[*0..1]-(m) RETURN p, ID(n) with params {key_0=TASK2}
+2018-04-12 13:00:10.251  INFO 10056 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Status` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type with params {rows=[{type=node, nodeId=2556, props={key=in_progress}}]}
+2018-04-12 13:00:10.263  INFO 10056 --- [           main] o.n.o.drivers.bolt.request.BoltRequest   : Request: UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Task` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type with params {rows=[{type=node, nodeId=2558, props={key=TASK2}}]}
+Task "TASK2" updated, status: "null"
+
+
+Executable queries for "update-task-status TASK2 in_progress" command:
+
+:params {rows:[{type:"node", nodeId:2555, props:{key:"todo"}}]}
+UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Status` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type;
+
+:params {rows:[{startNodeId:2558, relRef:-1123664282, type:"rel", endNodeId:2556}]}
+UNWIND {rows} as row MATCH (startNode) WHERE ID(startNode) = row.startNodeId MATCH (endNode) WHERE ID(endNode) = row.endNodeId MERGE (startNode)-[rel:`HAS_STATUS`]->(endNode) RETURN row.relRef as ref, ID(rel) as id, row.type as type;
+
+:params {rows:[{type:"node", nodeId:2556, props:{key:"in_progress"}}]}
+UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Status` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type;
+
+:params {rows:[{type:"node", nodeId:2558, props:{key:"TASK2"}}]}
+UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Task` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type;
+
+:params {rows:[{startNodeId:2558, relRef:-732118572, type:"rel", endNodeId:2556}]}
+UNWIND {rows} as row MATCH (startNode) WHERE ID(startNode) = row.startNodeId MATCH (endNode) WHERE ID(endNode) = row.endNodeId MERGE (startNode)-[rel:`HAS_STATUS`]->(endNode) RETURN row.relRef as ref, ID(rel) as id, row.type as type;
+
+:params {rows:[{type:"node", nodeId:2556, props:{key:"in_progress"}}]}
+UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Status` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type;
+
+:params {rows:[{type:"node", nodeId:2558, props:{key:"TASK2"}}]}
+UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Task` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type;
+
+Executable queries for "update-task-status TASK2 null" comamnd:
+
+:params {key_0:"TASK2"}
+MATCH (n:`Task`) WHERE n.`key` = { `key_0` } WITH n MATCH p=(n)-[*0..1]-(m) RETURN p, ID(n);
+
+:params {rows:[{type:"node", nodeId:2556, props:{key:"in_progress"}}]}
+UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Status` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type;
+
+:params {rows:[{type:"node", nodeId:2558, props:{key:"TASK2"}}]}
+UNWIND {rows} as row MATCH (n) WHERE ID(n)=row.nodeId SET n:`Task` SET n += row.props RETURN row.nodeId as ref, ID(n) as id, row.type as type;
