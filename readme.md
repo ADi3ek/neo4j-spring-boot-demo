@@ -2,6 +2,13 @@
 
 **https://stackoverflow.com/questions/49783019/unable-to-change-or-delete-relationship-between-nodes-with-neo4j-ogm-using-sprin**
 
+**And also reported here:**
+
+**https://jira.spring.io/browse/DATAGRAPH-1082**
+
+**EDIT: The issue is now resolved by adding `@Transactional` annotation to command methods**
+
+
 The demo uses Spring Boot framework with Spring Data Neo4j module. There are two nodes and one relationship between them defined:
 
 * `Task` node, which can have one `Status` (`HAS_STATUS` outgoing relationship)
@@ -14,9 +21,6 @@ One can manipulate the nodes using Spring shell commands:
     `create-task TASK1 todo`<br><br>
 * `update-task-status` - updates the task with a new `Status`, usage example:<br><br>
     `update-task-status TASK1 in_progress`
-    
-Apparently, updating the `Status` of a `Task` doesn't currently work as expected, that is, the old relationship will remain instead of being removed. 
-Also, removing a `Status` also does not work. **If you have any idea what I might be doing wrong here, please let me know!**  
 
 
 

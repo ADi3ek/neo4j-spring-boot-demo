@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Transactional;
 
 @ShellComponent
 public class Neo4jCommands {
@@ -15,6 +16,7 @@ public class Neo4jCommands {
     private Neo4jService neo4jService;
 
     @ShellMethod("Update task's status in Neo4j DB")
+    @Transactional
     public String updateTaskStatus(@ShellOption String taskKey, @ShellOption String newStatusKey) {
         Status status = null;
         Task task = neo4jService.findTaskByKey(taskKey);
@@ -28,6 +30,7 @@ public class Neo4jCommands {
     }
 
     @ShellMethod("Create new task node and save into Neo4j DB")
+    @Transactional
     public String createTask(@ShellOption String key, @ShellOption String statusKey) {
         Status status = neo4jService.findStatusByKey(statusKey);
 
@@ -37,6 +40,7 @@ public class Neo4jCommands {
     }
 
     @ShellMethod("Crearte all status nodes in Neo4j DB")
+    @Transactional
     public String createStatuses() {
 
         neo4jService.createStatus("todo");
